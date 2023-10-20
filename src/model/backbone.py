@@ -1,4 +1,4 @@
-import torch
+import torch, os
 import torch.nn as nn
 import torch.nn.functional as F
 from .resnet_cbam import BasicBlock
@@ -40,7 +40,7 @@ def convt_bn_relu(ch_in, ch_out, kernel, stride=1, padding=0, output_padding=0,
 
     return layers
 
-
+cur_path = os.path.abspath('.')
 class Backbone(nn.Module):
     def __init__(self, args, mode='rgbd'):
         super(Backbone, self).__init__()
@@ -65,7 +65,7 @@ class Backbone(nn.Module):
         else:
             raise TypeError(mode)
 
-        self.former = PVT(in_chans=64, patch_size=2, pretrained='./pretrained/pvt.pth',)
+        self.former = PVT(in_chans=64, patch_size=2, pretrained='/root/src/CompletionFormer/src/pretrained/pvt.pth',)
 
         channels = [64, 128, 64, 128, 320, 512]
         # Shared Decoder

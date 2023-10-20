@@ -54,6 +54,7 @@ def read_depth(file_name):
     # refer to readme file in KITTI dataset
     assert os.path.exists(file_name), "file not found: {}".format(file_name)
     image_depth = np.array(Image.open(file_name))
+    image_depth = (image_depth / 655) * 1000
 
     # Consider empty depth
     assert (np.max(image_depth) == 0) or (np.max(image_depth) > 255), \

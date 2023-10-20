@@ -1,0 +1,16 @@
+{
+    "test": [
+        {
+            "rgb": "data_depth_selection/val_selection_cropped/image/1680684172.425515838.jpg",
+            "depth": "data_depth_selection/val_selection_cropped/velodyne_raw/1680684172.425515838.png",
+            "gt": "data_depth_selection/val_selection_cropped/groundtruth_depth/1680684172.425515838.png",
+            "K": "data_depth_selection/val_selection_cropped/intrinsics/rectify_camera_info.txt"
+        },
+        {
+            "rgb": "data_depth_selection/val_selection_cropped/image/1680684658.271560916.jpg",
+            "depth": "data_depth_selection/val_selection_cropped/velodyne_raw/1680684658.271560916.png",
+            "gt": "data_depth_selection/val_selection_cropped/groundtruth_depth/1680684658.271560916.png",
+            "K": "data_depth_selection/val_selection_cropped/intrinsics/rectify_camera_info.txt"
+        }
+    ]
+}

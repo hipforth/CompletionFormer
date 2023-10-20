@@ -51,6 +51,14 @@ def init_seed(seed=None):
     random.seed(seed)
     torch.cuda.manual_seed_all(seed)
 
+def parser_timestamp(image_name_file):
+    image_name_list = []
+    with open(image_name_file) as f:
+        for line in f.readlines():
+            tmp_txt = str.split(line.strip())
+            image_name_list.append(tmp_txt[8])
+    return image_name_list
+
 
 def check_args(args):
     new_args = args
@@ -356,11 +364,12 @@ def test(args):
 
     metric = CompletionFormerMetric(args)
 
-    try:
-        os.makedirs(args.save_dir, exist_ok=True)
-        os.makedirs(args.save_dir + '/test', exist_ok=True)
-    except OSError:
-        pass
+    # try:
+    #     os.makedirs(args.save_dir, exist_ok=True)
+    #     # os.makedirs(args.save_dir + '/test', exist_ok=True)
+    #     print(args.save_dir)
+    # except OSError:
+    #     pass
 
     writer_test = CompletionFormerSummary(args.save_dir, 'test', args, None, metric.metric_name)
 
@@ -373,6 +382,8 @@ def test(args):
     t_total = 0
 
     init_seed()
+    image_name_list = parser_timestamp(args.image_name_file)
+    i = 0
     for batch, sample in enumerate(loader_test):
         sample = {key: val.cuda() for key, val in sample.items()
                   if val is not None}
@@ -390,7 +401,8 @@ def test(args):
 
         # Save data for analysis
         if args.save_image:
-            writer_test.save(args.epochs, batch, sample, output)
+            writer_test.save(args.epochs, batch, sample, output, image_name_list[i])
+            i = i + 1
 
         current_time = time.strftime('%y%m%d@%H:%M:%S')
         error_str = '{} | Test'.format(current_time)
@@ -405,7 +417,7 @@ def test(args):
     t_avg = t_total / num_sample
     print('Elapsed time : {} sec, '
           'Average processing time : {} sec'.format(t_total, t_avg))
-
+    print('save image nums: {}, all image nums{}'.format(i+1, len(image_name_list)))
 
 def main(args):
     init_seed()

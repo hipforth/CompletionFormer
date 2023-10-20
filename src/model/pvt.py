@@ -3,13 +3,14 @@ import torch.nn as nn
 import torch.nn.functional as F
 from functools import partial
 import torchvision
+import os
 
 from timm.models.layers import DropPath, to_2tuple, trunc_normal_
 from mmseg.utils import get_root_logger
 from mmcv.runner import load_checkpoint
 from .resnet_cbam import BasicBlock
 
-
+cur_path = os.path.abspath('.')
 model_path = {
     'resnet18': 'pretrained/resnet18.pth',
     'resnet34': 'pretrained/resnet34.pth'
@@ -19,7 +20,7 @@ model_path = {
 def get_resnet18(pretrained=True):
     net = torchvision.models.resnet18(pretrained=False)
     if pretrained:
-        state_dict = torch.load(model_path['resnet18'])
+        state_dict = torch.load('/root/src/CompletionFormer/src/'+model_path['resnet18'])
         net.load_state_dict(state_dict)
 
     return net
@@ -28,7 +29,7 @@ def get_resnet18(pretrained=True):
 def get_resnet34(pretrained=True):
     net = torchvision.models.resnet34(pretrained=False)
     if pretrained:
-        state_dict = torch.load(model_path['resnet34'])
+        state_dict = torch.load('/root/src/CompletionFormer/src/'+model_path['resnet34'])
         net.load_state_dict(state_dict)
 
     return net

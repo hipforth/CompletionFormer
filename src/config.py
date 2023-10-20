@@ -255,6 +255,15 @@ parser.add_argument('--save_result_only',
                     default=False,
                     help='save result images only with submission format')
 
+# save image with timestamp
+parser.add_argument('--save_depth_path',
+                    type=str,
+                    default='./completioned_depth/',
+                    help='save result images only with submission format')
+parser.add_argument('--image_name_file',
+                    type=str,
+                    default='./real_color_interpolation.txt',
+                    help='save result images only with submission format')
 
 args = parser.parse_args()
 args.num_gpus = len(args.gpus.split(','))

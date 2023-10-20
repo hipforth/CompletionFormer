@@ -183,14 +183,15 @@ class CompletionFormerSummary(BaseSummary):
         self.loss = []
         self.metric = []
 
-    def save(self, epoch, idx, sample, output):
+    def save(self, epoch, idx, sample, output, image_name):
         with torch.no_grad():
             if self.args.save_result_only:
-                self.path_output = '{}/{}/epoch{:04d}'.format(self.log_dir,
-                                                              self.mode, epoch)
-                os.makedirs(self.path_output, exist_ok=True)
+                # self.path_output = '{}/{}/epoch{:04d}'.format(self.log_dir,
+                #                                               self.mode, epoch)
+                self.path_output = '{}/{}.png'.format(self.args.save_depth_path, image_name)
+                # os.makedirs(self.path_output, exist_ok=True)
 
-                path_save_pred = '{}/{:010d}.png'.format(self.path_output, idx)
+                path_save_pred = self.path_output
 
                 pred = output['pred'].detach()
 
